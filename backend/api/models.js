@@ -15,10 +15,14 @@ const User = sequelize.define('User',{
   password: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  photo: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 },
   {
-    tableName: 'user',
+    tableName: 'users',
     timestamps: false
 })
 

@@ -3,3 +3,16 @@
 body {
   background-color: #191e1f;
 }
+
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    background: #1a2122;
+  }
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #606868;
+    border-radius: 10px;
+    height: 100px;
+    /* #2b3536 */
+  }
+}
