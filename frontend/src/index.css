@@ -1,18 +1,23 @@
 @import "tailwindcss";
 
 body {
-  background-color: #191e1f;
+  background-color: #1e2527;
+  height: 100%;
+  /* #191e1f */
 }
-
 
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
-    background: #1a2122;
+    width: 14px;
   }
+
+  .scrollbar::-webkit-scrollbar-button {
+    background: #606868;
+    border-radius: 50%;
+  }
+
   .scrollbar::-webkit-scrollbar-thumb {
     background: #606868;
     border-radius: 10px;
-    height: 100px;
-    /* #2b3536 */
   }
 }

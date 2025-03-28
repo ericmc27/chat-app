@@ -1,8 +1,9 @@
 import React from "react";
 import { uploadNewUserPhoto } from "../apis";
-import messages from "../assets/icons8-message-48.png";
-import addContact from "../assets/icons8-add-contact-48.png";
-import friendsStories from "../assets/icons8-stories-48.png";
+import settings from "../assets/icons8-settings.png";
+import addContact from "../assets/icons8-add-contact.png";
+import stories from "../assets/icons8-chat-stories.png";
+import chatBrand from "../assets/icons8-chat-brand.png";
 
 const users = [
   { fullName: "John Doe" },
@@ -24,7 +25,7 @@ const users = [
 
 const Chat: React.FC = () => {
   const currentUserPhoto = localStorage.getItem("currentUserPhoto");
-  const [selection, setSelection] = React.useState<string>("messages");
+  const [selection, setSelection] = React.useState<string>("");
 
   const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -35,9 +36,12 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center min-h-screen">{/**Container */}
+    <div className="flex h-screen">
+      {/**Container */}
 
-      <div className="bg-[#1a2122] w-60 rounded">{/**Left layout*/}
+      <div className="bg-[#1a2122] h-full w-69 rounded text-white">
+        {/**Left layout */}
+        {/* #1a2122 */}
         <label htmlFor="photo-upload">
           <img
             src={
@@ -61,14 +65,9 @@ const Chat: React.FC = () => {
           <div className="flex flex-col items-center gap-2">
             <img
               className="h-10 w-10 hover:cursor-pointer"
-              src={messages}
-              onClick={() => setSelection("messages")}
+              src={stories}
+              onClick={() => setSelection("friendsStories")}
             />
-            <div
-              className={`rounded-full h-3 w-3 border border-lime-50 ${
-                selection === "messages" && "bg-lime-500"
-              }`}
-            ></div>
           </div>
 
           <div className="flex flex-col items-center gap-2">
@@ -77,56 +76,64 @@ const Chat: React.FC = () => {
               src={addContact}
               onClick={() => setSelection("addContact")}
             />
-            <div
-              className={`rounded-full h-3 w-3 border border-lime-50 ms-3 ${
-                selection === "addContact" && "bg-lime-500"
-              }`}
-            ></div>
           </div>
 
           <div className="flex flex-col items-center gap-2">
             <img
               className="h-10 w-10 hover:cursor-pointer"
-              src={friendsStories}
-              onClick={() => setSelection("friendsStories")}
+              src={settings}
+              onClick={() => setSelection("settings")}
             />
-            <div
-              className={`rounded-full h-3 w-3 border-lime-50 border ${
-                selection === "friendsStories" && "bg-lime-500"
-              }`}
-            ></div>
           </div>
+        
         </div>
 
+        <div className="text-lime-300 mt-3 text-center">@ericast</div>
+
         <div className="mt-5 h-132 overflow-auto scrollbar">
-          {
-            users.map((user, index)=>{
-              return(
-                <>
-                <div className="flex mb-2.5 items-center gap-2 text-white">
-                  <img className="ms-4 h-10 w-10 rounded-full" src={`/assets/${currentUserPhoto}`}/>
+          {users.map((user, index) => {
+            return (
+              <>
+                <div className="flex mb-2.5 items-center gap-2">
+                  <img
+                    className="ms-4 h-10 w-10 rounded-full"
+                    src={`/assets/${currentUserPhoto}`}
+                  />
                   {user.fullName}
                 </div>
                 <div className="border border-[#576467] mb-2 w-41 mx-auto"></div>
-                </>
-                
-                
-              )
-            })
-          }
-
+              </>
+            );
+          })}
         </div>
       </div>
 
+      <div className="flex flex-col items-center mx-auto text-white  w-full">
+        {/**Middle layout */}
 
-
-      {/* {
-        selection === "messages" ? 
-        <div>hello</div>:<div className="flex flex-col h-full w-full items-center">
-        <input type="text" className="bg-[#232b2c] rounded h-14 w-100 mt-6" />
+        {selection === "friendsStories" ? (
+          <input
+            type="text"
+            className="bg-[#232b2c] rounded h-14 w-100 mt-7 mx-auto"
+          />
+        ) : selection === "addContact" ? (
+          <div className="mx-auto my-auto mt-20">
+            <label className="text-4xl text-white">Add a contact</label>
+          </div>
+        ) : selection === "settings" ? (
+          <div>settings</div>
+        ) : (
+          <div className="flex items-center my-auto">
+            <div className="flex flex-col">
+              <label className="text-6xl ms-7">Chatty</label>
+              <label className="mt-2 flex">
+                One click away from your friends
+              </label>
+            </div>
+            <img className="h-10 w-10" src={chatBrand} />
+          </div>
+        )}
       </div>
-      } */}
-      
     </div>
   );
 };

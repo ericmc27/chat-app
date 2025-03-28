@@ -1,5 +1,5 @@
 import React from "react"
-import chatLogo from "../assets/icons8-chat-48.png"
+import chatLogo from "../assets/icons8-chat-logo.png"
 import signIn from "../assets/sign-in.png"
 import { UserLogin } from "../interfaces"
 import { login } from "../apis"
