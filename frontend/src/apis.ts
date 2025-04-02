@@ -2,7 +2,7 @@ import { UserLogin } from "./interfaces"
 
 const login = async ({email, password}: UserLogin)=>{
   const body = {email, password}
-
+  
   const response = await fetch('/api/login',
     {
       method: 'POST',
@@ -14,11 +14,17 @@ const login = async ({email, password}: UserLogin)=>{
   )
   
   if(response.status === 200){
-    const data = await response.json()
-    localStorage.setItem("currentUserPhoto", data.photo)
     window.location.href = "/chat"
   }
 
+}
+
+const getCurrentUserData = async ()=>{
+  const response = await fetch('/api/get-current-user-data', {
+    method: 'GET'
+  })
+  const data = await response.json()
+  return data
 }
 
 const uploadNewUserPhoto = async (fileObj: File)=>{
@@ -35,4 +41,4 @@ const uploadNewUserPhoto = async (fileObj: File)=>{
   }
 }
 
-export {login, uploadNewUserPhoto}
+export {login, getCurrentUserData, uploadNewUserPhoto}

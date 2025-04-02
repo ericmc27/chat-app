@@ -2,8 +2,6 @@
 
 body {
   background-color: #1e2527;
-  height: 100%;
-  /* #191e1f */
 }
 
 @layer utilities {

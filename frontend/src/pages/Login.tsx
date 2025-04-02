@@ -1,8 +1,6 @@
 import React from "react"
-import chatLogo from "../assets/icons8-chat-logo.png"
-import signIn from "../assets/sign-in.png"
-import { UserLogin } from "../interfaces"
-import { login } from "../apis"
+import { chatLogo, signIn, login, UserLogin } from "../imports";
+
 
 const Login: React.FC = ()=>{
   const [userLogin, setUserLogin] = React.useState<UserLogin>({email: '', password: ''})
