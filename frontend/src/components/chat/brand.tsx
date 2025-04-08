@@ -1,4 +1,4 @@
-import chatBrand from "../../assets/icons8-chat-brand.png";
+import { chatBrand } from "../../imports";
 
 const Brand = () => {
   return (

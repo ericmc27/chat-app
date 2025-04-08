@@ -41,4 +41,15 @@ const uploadNewUserPhoto = async (fileObj: File)=>{
   }
 }
 
-export {login, getCurrentUserData, uploadNewUserPhoto}
+const sendFriendRequest = async (tag: string)=>{
+  const response = await fetch("/api/send-friend-request", {
+    method: 'POST',
+    body: tag
+  })
+}
+
+const addNewFriend =  async ()=>{
+  console.log("new friend added")
+}
+
+export {login, getCurrentUserData, uploadNewUserPhoto, sendFriendRequest, addNewFriend}

@@ -4,6 +4,19 @@ body {
   background-color: #1e2527;
 }
 
+@theme {
+  --animate-fade-in: fadeIn 2s ease-out;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
     width: 14px;

@@ -1,11 +1,16 @@
 import { DataTypes } from 'sequelize'
-import  sequelize from "../connection.js"
+import  sequelize from "../../connection.js"
 
 const User = sequelize.define('User',{
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
+  },
+  fullName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: false
   },
   tag: {
     type: DataTypes.STRING,
@@ -29,6 +34,13 @@ const User = sequelize.define('User',{
   {
     tableName: 'users',
     timestamps: false
+})
+
+User.belongsToMany(User, {
+  as: 'friends',
+  through: 'user_friends',
+  foreignKey: 'userId',
+  otherKey: 'friendId'
 })
 
 export { User }
