@@ -7,7 +7,7 @@ export { React }
 }
 import { queryClient } from "./main";
 import { useQuery } from "@tanstack/react-query";
-import { getCurrentUserData, uploadNewUserPhoto, addNewFriend } from "./apis";
+import { getCurrentUserData, uploadNewUserPhoto, addNewContact } from "./apis";
 import { io } from "socket.io-client";
 import FriendsStories from "./components/chat/friendsStories";
 import AddContact from "./components/chat/addNewContact";
@@ -24,7 +24,7 @@ export {
   useQuery,
   getCurrentUserData,
   uploadNewUserPhoto,
-  addNewFriend,
+  addNewContact,
   io,
   FriendsStories,
   AddContact,

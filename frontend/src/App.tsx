@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 import Login from "./pages/Login"
 import Chat from "./pages/Chat"
-import { checkJwtLoader } from "./loaders"
+import { chatLoader } from "./loaders"
 
 export const router = createBrowserRouter([
   {
@@ -10,7 +10,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/chat',
-    loader: checkJwtLoader,
+    loader: chatLoader,
     element: <Chat/>
   }
 ])

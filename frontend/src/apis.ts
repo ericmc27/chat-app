@@ -46,10 +46,12 @@ const sendFriendRequest = async (tag: string)=>{
     method: 'POST',
     body: tag
   })
+
+  return response
 }
 
-const addNewFriend =  async ()=>{
-  console.log("new friend added")
+const addNewContact =  async (tag: string)=>{
+  const response = await fetch("/api/accept-friend-request", {method: 'POST', body: tag})
 }
 
-export {login, getCurrentUserData, uploadNewUserPhoto, sendFriendRequest, addNewFriend}
+export {login, getCurrentUserData, uploadNewUserPhoto, sendFriendRequest, addNewContact}

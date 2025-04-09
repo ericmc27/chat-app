@@ -1,10 +1,11 @@
+import { useLoaderData } from "react-router-dom";
 import {
     React,
     queryClient,
     useQuery,
     getCurrentUserData,
     uploadNewUserPhoto,
-    addNewFriend,
+    addNewContact,
     io,
     FriendsStories,
     AddContact,
@@ -17,6 +18,7 @@ import {
     CachedUserData
 } from "../imports";
 
+
 // import addUser from "../assets/friend-request.png";
 
 const socket = io("http://localhost:3001", { withCredentials: true });
@@ -25,6 +27,8 @@ const Chat: React.FC = () => {
   const { data: currentUserData } = useQuery<CachedUserData>({
     queryKey: ["currentUserData"],
     queryFn: getCurrentUserData,
+    initialData: useLoaderData(),
+    enabled: false
   });
 
   const [selection, setSelection] = React.useState<string>("");
@@ -37,8 +41,18 @@ const Chat: React.FC = () => {
     }
   };
 
-  const acceptFriendRequest = async ()=>{
-    console.log("friendship accepted")
+  const acceptFriendRequest = async (tag: string)=>{
+    await addNewContact(tag)
+    queryClient.setQueryData<CachedUserData>(["currentUserData"], (oldData)=>{
+      if (!oldData){return oldData}
+
+      const updatePendingRequests = oldData.pendingRequests.filter((obj)=>(obj.tag !== tag))
+
+      return {
+        ...oldData,
+        pendingRequests: updatePendingRequests
+      }
+    })
   }
 
   const declineFriendRequest = async ()=>{
@@ -63,7 +77,6 @@ const Chat: React.FC = () => {
 
     socket.on("addNewContact", (data) => {
       queryClient.setQueryData<CachedUserData>(["currentUserData"], (oldData)=>{
-        console.log(data)
         if(!oldData){return oldData}
 
         const newPendingRequest = [...oldData.pendingRequests, data]
@@ -74,6 +87,20 @@ const Chat: React.FC = () => {
         }
       })
     });
+
+    socket.on("newFriendAdded", (data)=>{
+      queryClient.setQueryData<CachedUserData>(["currentUserData"], (oldData)=>{
+        console.log(data)
+        if (!oldData){return oldData}
+
+        const newContact = [...oldData.friends, data]
+
+        return {
+          ...oldData,
+          friends: newContact
+        }
+      })
+    })
 
     return () => {
       socket.off();
@@ -102,7 +129,7 @@ const Chat: React.FC = () => {
           id="photo-upload"
           type="file"
           className="hidden"
-          // onChange={handlePhotoChange}
+          onChange={handlePhotoChange}
         />
 
         <div className="flex justify-center mt-4 gap-2">
@@ -130,7 +157,9 @@ const Chat: React.FC = () => {
         </div>
 
         <div className="mt-4 flex-1 overflow-auto scrollbar">
-          {/**Users list */}
+          {currentUserData?.friends.map((friend, index)=>{
+            return <div>{friend.fullName}</div>
+          })}
         </div>
       </div>
 
@@ -165,15 +194,15 @@ const Chat: React.FC = () => {
                 } ${index === currentUserData.pendingRequests.length - 1 && "mb-3"}`}
               >
                 <img
-                  src={`/assets/${pendingRequest.photo}`}
+                  src={`${pendingRequest?.photo ? `/assets/${pendingRequest.photo}` : "/assets/profile-placeholder.png"}`}
                   className="h-10 w-10 rounded-full"
                 />
                 <div className="flex flex-col">
                   <h2 className="text-white capitalize">
                     {pendingRequest.fullName}
                   </h2>
-                  {/* <button className="border" type="button" onClick={acceptFriendRequest}>accept</button>
-                  <button className="border" type="button" onClick={declineFriendRequest}>decline</button> */}
+                  <button className="border" type="button" onClick={()=>(acceptFriendRequest(pendingRequest.tag))}>accept</button>
+                  <button className="border" type="button" onClick={declineFriendRequest}>decline</button>
                 </div>
               </div>
             );

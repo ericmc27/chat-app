@@ -10,9 +10,14 @@ const getCurrentUser = async (identifier) => {
   return await User.findOne({ where: query });
 };
 
+const getCurrentUserData = async (currentUser)=>{
+  const {tag, fullName, photo} = currentUser
+  return {tag, fullName, photo}
+}
+
 const getCurrentUserPendingRequests = async (currentUserId) => {
   const pendingRequests = await sequelize.query(`
-    SELECT u.fullName, u.photo FROM user_friends AS uf
+    SELECT u.tag, u.fullName, u.photo FROM user_friends AS uf
     INNER JOIN users AS u ON uf.userId = u.id WHERE uf.friendId = :currentUserId
     AND uf.status = 'pending'`,
     {replacements: {currentUserId}, type: QueryTypes.SELECT})
@@ -20,4 +25,14 @@ const getCurrentUserPendingRequests = async (currentUserId) => {
   return pendingRequests;
 };
 
-export { getCurrentUser, getCurrentUserPendingRequests };
+const getCurrentUserFriends = async (currentUserId)=>{
+  const friends = await sequelize.query(`
+    SELECT u.tag, u.fullName, u.photo FROM user_friends AS uf
+    INNER JOIN users AS u ON uf.friendId = u.id WHERE uf.userId = :currentUserId
+    AND uf.status = 'accepted'
+    `, {replacements: {currentUserId}, type: QueryTypes.SELECT})
+  
+  return friends
+}
+
+export { getCurrentUser, getCurrentUserData, getCurrentUserPendingRequests, getCurrentUserFriends };

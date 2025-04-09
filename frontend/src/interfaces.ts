@@ -5,12 +5,14 @@ export interface UserLogin {
 }
 
 {/**pages/Chat.tsx */}
-interface PendingRequests {
+interface CachedUserObjects {
+  tag: string,
   fullName: string,
   photo: string
 }
 export interface CachedUserData {
   tag: string,
   photo: string,
-  pendingRequests: PendingRequests[]
+  friends: CachedUserObjects[],
+  pendingRequests: CachedUserObjects[]
 }
