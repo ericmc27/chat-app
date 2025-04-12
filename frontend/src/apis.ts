@@ -1,6 +1,6 @@
 import { UserLogin } from "./interfaces"
 
-const login = async ({email, password}: UserLogin)=>{
+const login = async ({email, password}: UserLogin): Promise<void> =>{
   const body = {email, password}
   
   const response = await fetch('/api/login',
@@ -52,6 +52,18 @@ const sendFriendRequest = async (tag: string)=>{
 
 const addNewContact =  async (tag: string)=>{
   const response = await fetch("/api/accept-friend-request", {method: 'POST', body: tag})
+  return response
 }
 
-export {login, getCurrentUserData, uploadNewUserPhoto, sendFriendRequest, addNewContact}
+const sendMessage =  async (tag: string, message: string) => {
+  const body = {tag, message}
+
+  const response = await fetch("/api/send-message", {
+    method: 'POST',
+    body: JSON.stringify(body)
+  })
+
+  return response
+}
+
+export {login, getCurrentUserData, uploadNewUserPhoto, sendFriendRequest, addNewContact, sendMessage}

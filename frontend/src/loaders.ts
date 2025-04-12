@@ -6,7 +6,7 @@ const checkJwtLoader = async ()=>{
   if (response.status === 200) {
     return true
   } else {
-    window.location.href = "/login"
+    window.location.href = "/"
     return false
   }
 }

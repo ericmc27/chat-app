@@ -1,26 +1,31 @@
-import { createBrowserRouter } from "react-router-dom"
-import Login from "./pages/Login"
-import Chat from "./pages/Chat"
-import { chatLoader } from "./loaders"
+import { createBrowserRouter } from "react-router-dom";
+import Login from "./pages/Login";
+import Chat from "./pages/Chat";
+import { chatLoader } from "./loaders";
+import { CurrentUserProvider } from "./CurrentUserContext";
 
 export const router = createBrowserRouter([
   {
-    path: '/login',
-    element: <Login/>
+    path: "/",
+    element: <Login />,
   },
   {
-    path: '/chat',
+    path: "/chat",
     loader: chatLoader,
-    element: <Chat/>
-  }
-])
+    element: (
+      <CurrentUserProvider>
+        <Chat />
+      </CurrentUserProvider>
+    ),
+  },
+]);
 
 function App() {
   return (
     <>
       <div>hello</div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
