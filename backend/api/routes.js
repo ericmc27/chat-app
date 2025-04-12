@@ -157,4 +157,10 @@ apiRouter.get("/verify-jwt-token", async (req, res) => {
   return res.status(200).send({ success: true });
 });
 
+apiRouter.post('/send-message', async (req, res) => {
+  const message = JSON.parse(req.body)
+  io.to(connectedUsers[message.tag]).emit("sendNewMessage", message.message)
+  return res.status(200)
+})
+
 export default apiRouter;

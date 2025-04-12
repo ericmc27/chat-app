@@ -37,7 +37,7 @@ export const connectedUsers = {};
 
 io.on("connection", (socket) => {
   const cookies = cookie.parse(socket.handshake.headers.cookie || "");
-
+  
   try {
     jwt.verify(cookies.jwtToken, process.env.SECRET_KEY);
     const currentUserTag = jwt.decode(cookies.jwtToken).tag;

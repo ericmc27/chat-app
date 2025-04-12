@@ -1,18 +1,18 @@
-import {React, sendRequest, sendFriendRequest} from "../../imports"
+import { React, sendRequest, sendFriendRequest } from "../../imports";
 
 const AddNewContact: React.FC = () => {
-  const [tag, setTag] = React.useState<string>("@")
+  const [tag, setTag] = React.useState<string>("@");
 
   const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTag(e.currentTarget.value)
-  }
+    setTag(e.currentTarget.value);
+  };
 
-  const submitTag = ()=>{
-    sendFriendRequest(tag)
-  }
+  const submitTag = () => {
+    sendFriendRequest(tag);
+  };
 
   return (
-    <>
+    <div className="mx-auto mt-7">
       <h1 className="text-2xl mb-3">Add someone new to your world</h1>
 
       <div className="flex gap-3">
@@ -23,9 +23,13 @@ const AddNewContact: React.FC = () => {
           onChange={handleTagChange}
           value={tag}
         />
-        <img src={sendRequest} className="h-12 w-12 hover:cursor-pointer" onClick={submitTag}/>
+        <img
+          src={sendRequest}
+          className="h-12 w-12 hover:cursor-pointer"
+          onClick={submitTag}
+        />
       </div>
-    </>
+    </div>
   );
 };
 
